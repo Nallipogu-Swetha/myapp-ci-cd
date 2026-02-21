@@ -58,3 +58,13 @@ pipeline {
         }
     }
 }
+stage('SAST Scan') {
+    steps {
+        sh 'sonar-scanner -Dsonar.projectKey=myapp -Dsonar.sources=src -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<token>'
+    }
+}
+stage('DAST Scan') {
+    steps {
+        sh 'zap-cli quick-scan --self-contained http://localhost:8080'
+    }
+}
